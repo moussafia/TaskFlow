@@ -4467,7 +4467,7 @@
 								"$ref": "AAAAAAGMnMV/fMU8Mas="
 							},
 							"lineStyle": 1,
-							"points": "631:678;462:674"
+							"points": "631:678;462:676"
 						},
 						{
 							"_type": "UMLContainmentView",
@@ -4499,7 +4499,7 @@
 								"$ref": "AAAAAAGMnMfVnM3YwWU="
 							},
 							"lineStyle": 1,
-							"points": "174:664;271:668"
+							"points": "174:665;271:670"
 						},
 						{
 							"_type": "UMLClassView",
@@ -5152,13 +5152,30 @@
 											"height": 13,
 											"text": "+requestStatus: RequestStatus",
 											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLAttributeView",
+											"_id": "AAAAAAGMnQYGFiGMkiw=",
+											"_parent": {
+												"$ref": "AAAAAAGMnNjQ/ARy0Zw="
+											},
+											"model": {
+												"$ref": "AAAAAAGMnQYFwSF3ANI="
+											},
+											"font": "Arial;13;0",
+											"left": 277,
+											"top": 699,
+											"width": 180.30517578125,
+											"height": 13,
+											"text": "+dateRequest: DateTime",
+											"horizontalAlignment": 0
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 272,
 									"top": 649,
 									"width": 190.30517578125,
-									"height": 53
+									"height": 68
 								},
 								{
 									"_type": "UMLOperationCompartmentView",
@@ -5171,7 +5188,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 272,
-									"top": 702,
+									"top": 717,
 									"width": 190.30517578125,
 									"height": 10
 								},
@@ -5213,7 +5230,7 @@
 							"left": 272,
 							"top": 624,
 							"width": 190.30517578125,
-							"height": 97,
+							"height": 103,
 							"nameCompartment": {
 								"$ref": "AAAAAAGMnNjQ/ARtxKc="
 							},
@@ -6291,6 +6308,15 @@
 							"type": {
 								"$ref": "AAAAAAGMnMV/fMU6bIg="
 							}
+						},
+						{
+							"_type": "UMLAttribute",
+							"_id": "AAAAAAGMnQYFwSF3ANI=",
+							"_parent": {
+								"$ref": "AAAAAAGMnNjQ/ARqVCA="
+							},
+							"name": "dateRequest",
+							"type": "DateTime"
 						}
 					]
 				}
