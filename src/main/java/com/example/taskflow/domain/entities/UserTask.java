@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class UserTask {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private LocalDateTime date;
     private TaskAction taskAction;
     @ManyToOne

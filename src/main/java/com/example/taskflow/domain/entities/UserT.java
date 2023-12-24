@@ -11,12 +11,16 @@ import java.util.Collection;
 @Setter @Getter
 public class UserT {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String firstName;
     private String LastName;
     @Column(unique = true)
     private String email;
     private String password;
-    @OneToMany(mappedBy = "userT") @JsonBackReference
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonBackReference
+    private Collection<RoleT> roles;
+    @OneToMany(mappedBy = "userT")
+    @JsonBackReference
     private Collection<UserTask> userTasks;
 }

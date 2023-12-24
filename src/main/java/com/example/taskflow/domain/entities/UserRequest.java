@@ -17,7 +17,7 @@ import java.util.Collection;
 @NoArgsConstructor
 public class UserRequest {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private TypeRequest typeRequest;
     private RequestStatus requestStatus;
     private LocalDateTime dateRequest;

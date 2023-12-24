@@ -12,9 +12,9 @@ import java.util.Collection;
 @NoArgsConstructor
 public class RoleT {
     @Id @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(unique = true)
     private String name;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Collection<PermissionT> permissions;
 }
