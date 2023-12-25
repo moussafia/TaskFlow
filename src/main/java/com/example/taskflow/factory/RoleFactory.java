@@ -3,9 +3,10 @@ package com.example.taskflow.factory;
 import com.example.taskflow.domain.entities.PermissionT;
 import com.example.taskflow.domain.entities.RoleT;
 import com.example.taskflow.repository.RoleRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-
+@Component
 public class RoleFactory {
     private static RoleRepository roleRepository;
 

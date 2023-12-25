@@ -2,13 +2,15 @@ package com.example.taskflow.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Collection;
 
 @Entity
-@Setter @Getter
+@Setter @Getter @AllArgsConstructor @NoArgsConstructor
 public class UserT {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

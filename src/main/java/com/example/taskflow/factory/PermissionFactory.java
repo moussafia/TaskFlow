@@ -13,7 +13,7 @@ public class PermissionFactory {
         this.permissionRepository = permissionRepository;
     }
 
-    public static List<PermissionT> permissionT(){
+    public static List<PermissionT> createPermissionFactory(){
         List<PermissionT> permissionTList = List.of(
                 new PermissionT(null,"can_create"),
                 new PermissionT(null,"can_show"),

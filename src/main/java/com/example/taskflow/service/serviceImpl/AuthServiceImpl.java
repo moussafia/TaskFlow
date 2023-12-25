@@ -5,7 +5,9 @@ import com.example.taskflow.service.AuthService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AuthServiceImpl implements AuthService {
     private UserRepository userRepository;
 
@@ -21,4 +23,5 @@ public class AuthServiceImpl implements AuthService {
             });
         };
     }
+
 }
