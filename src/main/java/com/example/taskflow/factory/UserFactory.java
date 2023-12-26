@@ -20,9 +20,9 @@ public class UserFactory {
 
     public static List<UserT> createUserFactory(List<RoleT> roleTList){
         List<UserT> userTList = List.of(
-                new UserT(null, "mohammed", "moussafia", "moha@gmail.com",passwordEncoder.encode("1234"),roleTList, null,null),
-                new UserT(null, "simo", "moussa", "simo@gmail.com",passwordEncoder.encode("1234"),roleTList.stream().filter(rl->!rl.equals("MANAGER")).toList(), null, null),
-                new UserT(null, "bilal", "bilal", "bilal@gmail.com",passwordEncoder.encode("1234"),roleTList.stream().filter(rl->!rl.equals("MANAGER")).toList(), null, null)
+                new UserT(null, "mohammed", "moussafia", "moha@gmail.com",passwordEncoder.encode("1234"), roleTList, null,1, 2, null),
+                new UserT(null, "simo", "moussa", "simo@gmail.com",passwordEncoder.encode("1234"),roleTList.stream().filter(rl->!rl.equals("MANAGER")).toList(), null,1, 2, null),
+                new UserT(null, "bilal", "bilal", "bilal@gmail.com",passwordEncoder.encode("1234"),roleTList.stream().filter(rl->!rl.equals("MANAGER")).toList(), null,1, 2, null)
         );
         return userRepository.saveAll(userTList);
     }
