@@ -30,26 +30,13 @@ public class AuthServiceImpl implements AuthService {
         this.jwtService = jwtService;
     }
 
-    @Override
-    public UserDetailsService userDetails() {
-        return (email)->{
-            return (UserDetails) this.userRepository.findByEmail(email).orElseThrow(()->{
-                return new UsernameNotFoundException("user with " + email + "is Not found");
-            });
-        };
-    }
     public UserT signUp(UserT userT){
         validateUserIfExistForSignUp(userT.getEmail());
         String passwordEncrypted = passwordEncoder.encode(userT.getPassword());
         userT.setPassword(passwordEncrypted);
         return userRepository.save(userT);
     }
-    public Map<String, String> signIn(String email, String password){
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(email, password)
-        );
-        return jwtService.generateAccessAndRefreshToken(authentication);
-    }
+
 
     private void validateUserIfExistForSignUp(String email) {
         Optional<UserT> user = userRepository.findByEmail(email);

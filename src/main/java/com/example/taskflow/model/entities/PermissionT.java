@@ -3,7 +3,9 @@ package com.example.taskflow.model.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Entity @Getter @Setter
+@Entity
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,4 +15,5 @@ public class PermissionT {
     private Long id;
     @Column(unique = true)
     private String name;
+
 }

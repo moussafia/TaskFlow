@@ -41,7 +41,7 @@ public class JWTServiceImpl implements JWTService {
     public Map<String, String> generateAccessTokenByRefreshToken(String refreshToken) throws AuthenticationException {
         if(refreshToken!=null)
             throw new AuthenticationException("Refresh token is required");
-        Jwt decodeJwt = null;
+        Jwt decodeJwt;
         try {
             decodeJwt = jwtDecoder.decode(refreshToken);
         }catch (JwtException e){

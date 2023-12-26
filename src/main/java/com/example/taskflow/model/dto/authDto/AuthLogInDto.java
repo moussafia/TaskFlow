@@ -6,7 +6,6 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
 public record AuthLogInDto(
         @NotBlank(message = "Email cannot be blank")
         @Email(message = "Invalid email format")

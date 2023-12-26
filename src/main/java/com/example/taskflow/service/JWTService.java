@@ -15,4 +15,6 @@ public String jwtAccessTokenEncoded(String subject, Instant instant, Collection<
 public String jwtRefreshTokenEncoded(String subject, Instant instant);
 public Map<String, String> generateAccessTokenByRefreshToken(String refreshToken) throws AuthenticationException;
 
+    interface UserService {
+    }
 }

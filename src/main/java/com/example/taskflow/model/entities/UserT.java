@@ -2,15 +2,18 @@ package com.example.taskflow.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Entity
-@Setter @Getter @AllArgsConstructor @NoArgsConstructor
+@Builder
+@Setter @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserT {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,7 +30,4 @@ public class UserT {
     private Collection<UserTask> userTasks;
     private int TokenPerDayAvailable;
     private int TokenPerMonthAvailable;
-    private String refreshToken;
-
-
 }
