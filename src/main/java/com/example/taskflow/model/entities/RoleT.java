@@ -1,4 +1,4 @@
-package com.example.taskflow.domain.entities;
+package com.example.taskflow.model.entities;
 
 import jakarta.persistence.*;
 import lombok.*;

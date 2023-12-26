@@ -1,6 +1,6 @@
 package com.example.taskflow.repository;
 
-import com.example.taskflow.domain.entities.UserTask;
+import com.example.taskflow.model.entities.UserTask;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

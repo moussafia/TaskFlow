@@ -1,4 +1,4 @@
-package com.example.taskflow.domain.entities.enums;
+package com.example.taskflow.model.entities.enums;
 
 public enum RequestStatus {
     PENDING,ACCEPTED,REJECTED

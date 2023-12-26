@@ -1,6 +1,6 @@
-package com.example.taskflow.domain.entities;
+package com.example.taskflow.model.entities;
 
-import com.example.taskflow.domain.entities.enums.TaskAction;
+import com.example.taskflow.model.entities.enums.TaskAction;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -1,4 +1,4 @@
-package com.example.taskflow.domain.entities;
+package com.example.taskflow.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
@@ -25,4 +25,9 @@ public class UserT {
     @OneToMany(mappedBy = "userT")
     @JsonBackReference
     private Collection<UserTask> userTasks;
+    private int TokenPerDayAvailable;
+    private int TokenPerMonthAvailable;
+    private String refreshToken;
+
+
 }

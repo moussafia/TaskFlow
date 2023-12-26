@@ -1,6 +1,6 @@
-package com.example.taskflow.domain.entities;
+package com.example.taskflow.model.entities;
 
-import com.example.taskflow.domain.entities.enums.TaskStatus;
+import com.example.taskflow.model.entities.enums.TaskStatus;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,6 +23,7 @@ public class Task {
     private LocalTime startTime;
     private LocalTime endTime;
     private TaskStatus taskStatus;
+    private boolean isChanged;
     @ManyToMany
     private Collection<Tag> tags;
     @OneToMany(mappedBy = "task")

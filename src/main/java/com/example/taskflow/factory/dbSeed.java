@@ -1,8 +1,8 @@
 package com.example.taskflow.factory;
 
-import com.example.taskflow.domain.entities.PermissionT;
-import com.example.taskflow.domain.entities.RoleT;
-import com.example.taskflow.domain.entities.UserT;
+import com.example.taskflow.model.entities.PermissionT;
+import com.example.taskflow.model.entities.RoleT;
+import com.example.taskflow.model.entities.UserT;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
