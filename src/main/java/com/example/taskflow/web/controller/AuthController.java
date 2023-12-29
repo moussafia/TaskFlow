@@ -1,9 +1,13 @@
 package com.example.taskflow.web.controller;
 
-import com.example.taskflow.model.dto.authDto.AuthLogInDto;
-import com.example.taskflow.model.mapper.UserMapper;
+import com.example.taskflow.model.dto.authDto.AccessTokenRequestDto;
+import com.example.taskflow.model.dto.authDto.AuthenticationRequestDto;
+import com.example.taskflow.model.dto.authDto.AuthenticationResponseDto;
+import com.example.taskflow.model.dto.authDto.RegisterRequestDto;
 import com.example.taskflow.service.AuthService;
 import com.example.taskflow.service.JWTService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,21 +20,24 @@ import java.util.Map;
 @RequestMapping("api/v1/auth")
 public class AuthController {
     private AuthService authService;
-    private AuthenticationManager authenticationManager;
-    private JWTService jwtService;
-
-    public AuthController(AuthService authService, AuthenticationManager authenticationManager, JWTService jwtService) {
+    public AuthController(AuthService authService) {
         this.authService = authService;
-        this.authenticationManager = authenticationManager;
-        this.jwtService = jwtService;
     }
     @PostMapping("/logIn")
-    public ResponseEntity<Map<String,String>> logIn(@RequestBody AuthLogInDto authLogInDto){
-        Authentication authentication =authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authLogInDto.email(), authLogInDto.password())
-        );
-        Map<String, String> token = jwtService.generateAccessAndRefreshToken(authentication);
-        return ResponseEntity.ok().body(token);
+    public ResponseEntity<AuthenticationResponseDto> logIn(@RequestBody
+                                                               @Valid AuthenticationRequestDto authenticationRequestDto){
+        return ResponseEntity.ok(authService.authenticate(authenticationRequestDto));
 
+    }
+    @PostMapping("/register")
+    public ResponseEntity<AuthenticationResponseDto> logIn(@RequestBody
+                                                               @Valid RegisterRequestDto registerRequestDto){
+        return ResponseEntity.ok(authService.signUp(registerRequestDto));
+    }
+    @PostMapping("/token")
+    public ResponseEntity<Map<String, String>> getAccessTokenByRefreshToken(@RequestBody
+                                                                            @Valid AccessTokenRequestDto refreshToken){
+
+        return ResponseEntity.ok(authService.generateAccessTokenByRefreshToken(refreshToken.refreshToken()));
     }
 }

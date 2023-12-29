@@ -11,6 +11,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Base64;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -91,13 +92,14 @@ public class JWTServiceImpl implements JWTService {
 
     }
     @Override
-    public Map<String,String> generateAccessTokenByRefreshToken(String refreshToken, Collection<? extends GrantedAuthority> authorities){
+    public Map<String,String> generateAccessTokenByRefreshToken(String refreshToken){
         UserT user = refreshTokenRepository.findByRefreshToken(refreshToken)
                 .map(this::verifyExpiration)
                 .map(this::verifyIsRevoked)
                 .orElseThrow(()-> new RuntimeException("refresh token not found"))
                 .getUser();
-        String accessToken = jwtAccessTokenEncoded(user.getEmail(), Instant.now(), authorities);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
+        String accessToken = jwtAccessTokenEncoded(user.getEmail(), Instant.now(), authentication.getAuthorities());
         Map<String, String> token = new HashMap<>();
         token.put("access_Token", accessToken);
         token.put("refresh_Token", refreshToken);
