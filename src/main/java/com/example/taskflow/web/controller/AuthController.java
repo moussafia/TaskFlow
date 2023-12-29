@@ -29,7 +29,6 @@ public class AuthController {
         Authentication authentication =authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authLogInDto.email(), authLogInDto.password())
         );
-
         Map<String, String> token = jwtService.generateAccessAndRefreshToken(authentication);
         return ResponseEntity.ok().body(token);
 

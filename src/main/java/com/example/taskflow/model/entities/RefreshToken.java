@@ -20,4 +20,5 @@ public class RefreshToken {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserT user;
+
 }
