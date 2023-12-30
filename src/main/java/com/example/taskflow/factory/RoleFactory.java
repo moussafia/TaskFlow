@@ -1,7 +1,7 @@
 package com.example.taskflow.factory;
 
 import com.example.taskflow.entities.PermissionT;
-import com.example.taskflow.entities.RoleT;
+import com.example.taskflow.entities.AppRole;
 import com.example.taskflow.repository.RoleRepository;
 import org.springframework.stereotype.Component;
 
@@ -13,13 +13,13 @@ public class RoleFactory {
     public RoleFactory(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }
-    public static List<RoleT> createRoles(List<PermissionT> permissionTList){
-        List<RoleT> roleTList = List.of(
-                new RoleT().builder().name("USER").permissions(permissionTList.stream()
+    public static List<AppRole> createRoles(List<PermissionT> permissionTList){
+        List<AppRole> appRoleList = List.of(
+                new AppRole().builder().name("USER").permissions(permissionTList.stream()
                         .filter(p-> !p.getName().equals("can_assignToOther")).toList()).build(),
-                new RoleT().builder().name("MANAGER").permissions(permissionTList).build()
+                new AppRole().builder().name("MANAGER").permissions(permissionTList).build()
         );
-        return roleRepository.saveAll(roleTList);
+        return roleRepository.saveAll(appRoleList);
     }
 }
 

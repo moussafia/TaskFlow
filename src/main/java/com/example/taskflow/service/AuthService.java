@@ -1,10 +1,10 @@
 package com.example.taskflow.service;
 
-import com.example.taskflow.web.model.dto.authDto.AuthenticationRequestDto;
-import com.example.taskflow.web.model.dto.authDto.AuthenticationResponseDto;
-import com.example.taskflow.web.model.dto.authDto.RegisterRequestDto;
-import com.example.taskflow.entities.RoleT;
-import com.example.taskflow.entities.UserT;
+import com.example.taskflow.model.dto.authDto.AuthenticationRequestDto;
+import com.example.taskflow.model.dto.authDto.AuthenticationResponseDto;
+import com.example.taskflow.model.dto.authDto.RegisterRequestDto;
+import com.example.taskflow.entities.AppRole;
+import com.example.taskflow.entities.AppUser;
 import org.springframework.security.core.Authentication;
 
 import java.util.Map;
@@ -15,8 +15,8 @@ public AuthenticationResponseDto authenticate(AuthenticationRequestDto authentic
 public AuthenticationResponseDto signUp(RegisterRequestDto registerRequestDto);
 public void validateUserIfExistForSignUp(String email);
 
-public Set<RoleT> validateIfRoleNotExist(Set<String> roles);
+public Set<AppRole> validateIfRoleNotExist(Set<String> roles);
 
-public AuthenticationResponseDto generateAccessToken(Authentication authentication, UserT user);
+public AuthenticationResponseDto generateAccessToken(Authentication authentication, AppUser user);
 public Map<String, String> generateAccessTokenByRefreshToken(String refreshToken);
 }

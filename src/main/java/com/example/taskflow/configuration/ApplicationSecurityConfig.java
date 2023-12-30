@@ -1,6 +1,6 @@
 package com.example.taskflow.configuration;
 
-import com.example.taskflow.entities.UserT;
+import com.example.taskflow.entities.AppUser;
 import com.example.taskflow.repository.UserRepository;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -31,16 +31,19 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class ApplicationSecurityConfig {
 private RsaKeyConfig rsaKeyConfig;
 private PasswordEncoder passwordEncoder;
-    public SecurityConfig(RsaKeyConfig rsaKeyConfig, PasswordEncoder passwordEncoder) {
+    public ApplicationSecurityConfig(RsaKeyConfig rsaKeyConfig, PasswordEncoder passwordEncoder) {
         this.rsaKeyConfig = rsaKeyConfig;
         this.passwordEncoder = passwordEncoder;
     }
@@ -55,6 +58,7 @@ private PasswordEncoder passwordEncoder;
 
     @Bean
     JwtDecoder jwtDecoder(){
+
         return NimbusJwtDecoder.withPublicKey(rsaKeyConfig.publicKey()).build();
     }
     @Bean
@@ -63,32 +67,8 @@ private PasswordEncoder passwordEncoder;
         JWKSource<SecurityContext> jwkSource= new ImmutableJWKSet<>(new JWKSet(jwk));
         return new NimbusJwtEncoder(jwkSource);
     }
-    @Bean
-    public UserDetailsService userDetailsService(){
-       return new UserDetailsService() {
-           @Autowired
-           private UserRepository userRepository;
-           @Override
-           public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-               UserT userT = userRepository.findByEmail(username)
-                       .orElseThrow(()-> new UsernameNotFoundException("user with email "+ username + " not found"));
-               Collection<? extends GrantedAuthority> authorities = userT.getRoles().stream()
-                           .flatMap(r -> r.getPermissions().stream().map(p->new SimpleGrantedAuthority(p.getName())))
-                           .collect(Collectors.toSet());
-               return new User(username, userT.getPassword(), authorities);
-           };
-       };
-    }
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity
-                .csrf(csrf->csrf.disable())
-                .authorizeRequests(auth->auth.requestMatchers("api/v1/auth/**").permitAll())
-                .authorizeRequests(auth->auth.anyRequest().authenticated())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
-                .httpBasic(Customizer.withDefaults())
-                .build();
-    }
+
+
+
 
 }

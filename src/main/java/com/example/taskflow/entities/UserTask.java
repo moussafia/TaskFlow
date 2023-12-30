@@ -19,7 +19,7 @@ public class UserTask {
     @ManyToOne
     private Task task;
     @ManyToOne
-    private UserT userT;
+    private AppUser appUser;
     @ManyToOne
     private UserRequest userRequest;
 }

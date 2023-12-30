@@ -10,7 +10,7 @@ import java.util.Collection;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoleT {
+public class AppRole {
     @Id @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)

@@ -1,9 +1,9 @@
 package com.example.taskflow.web.controller;
 
-import com.example.taskflow.web.model.dto.authDto.AccessTokenRequestDto;
-import com.example.taskflow.web.model.dto.authDto.AuthenticationRequestDto;
-import com.example.taskflow.web.model.dto.authDto.AuthenticationResponseDto;
-import com.example.taskflow.web.model.dto.authDto.RegisterRequestDto;
+import com.example.taskflow.model.dto.authDto.AccessTokenRequestDto;
+import com.example.taskflow.model.dto.authDto.AuthenticationRequestDto;
+import com.example.taskflow.model.dto.authDto.AuthenticationResponseDto;
+import com.example.taskflow.model.dto.authDto.RegisterRequestDto;
 import com.example.taskflow.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

@@ -1,14 +1,14 @@
 package com.example.taskflow.service.serviceImpl;
 
-import com.example.taskflow.web.model.dto.authDto.AuthenticationRequestDto;
-import com.example.taskflow.web.model.dto.authDto.AuthenticationResponseDto;
-import com.example.taskflow.web.model.dto.authDto.RegisterRequestDto;
-import com.example.taskflow.entities.RoleT;
-import com.example.taskflow.entities.UserT;
+import com.example.taskflow.model.dto.authDto.AuthenticationRequestDto;
+import com.example.taskflow.model.dto.authDto.AuthenticationResponseDto;
+import com.example.taskflow.model.dto.authDto.RegisterRequestDto;
+import com.example.taskflow.entities.AppRole;
+import com.example.taskflow.entities.AppUser;
 import com.example.taskflow.repository.RoleRepository;
 import com.example.taskflow.repository.UserRepository;
 import com.example.taskflow.service.AuthService;
-import com.example.taskflow.service.JWTService;
+import com.example.taskflow.service.RefreshTokenService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,17 +25,17 @@ public class AuthServiceImpl implements AuthService {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
     private AuthenticationManager authenticationManager;
-    private JWTService jwtService;
+    private RefreshTokenService refreshTokenService;
     private RoleRepository roleRepository;
 
     public AuthServiceImpl(UserRepository userRepository,
                            PasswordEncoder passwordEncoder,
                            AuthenticationManager authenticationManager,
-                           JWTService jwtService, RoleRepository roleRepository) {
+                           RefreshTokenService refreshTokenService, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
-        this.jwtService = jwtService;
+        this.refreshTokenService = refreshTokenService;
         this.roleRepository = roleRepository;
     }
 
@@ -50,25 +50,25 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public AuthenticationResponseDto signUp(RegisterRequestDto registerRequestDto){
         validateUserIfExistForSignUp(registerRequestDto.email());
-        Set<RoleT> roles = validateIfRoleNotExist(registerRequestDto.roles());
+        Set<AppRole> roles = validateIfRoleNotExist(registerRequestDto.roles());
         String passwordEncrypted = passwordEncoder.encode(registerRequestDto.password());
-        UserT userT = RegisterRequestDto.toUser(registerRequestDto);
-        userT.setPassword(passwordEncrypted);
-        userT.setRoles(roles);
-        var userSaved = userRepository.save(userT);
+        AppUser appUser = RegisterRequestDto.toUser(registerRequestDto);
+        appUser.setPassword(passwordEncrypted);
+        appUser.setRoles(roles);
+        var userSaved = userRepository.save(appUser);
         Authentication authentication = new UsernamePasswordAuthenticationToken(userSaved.getEmail(), userSaved.getPassword());
         return generateAccessToken(authentication, userSaved);
     }
 
     @Override
     public void validateUserIfExistForSignUp(String email) {
-        Optional<UserT> user = userRepository.findByEmail(email);
+        Optional<AppUser> user = userRepository.findByEmail(email);
                 if(user.isPresent()){
                     throw new RuntimeException("user with email "+ email +" already exist");
                 }
     }
     @Override
-    public Set<RoleT> validateIfRoleNotExist(Set<String> roles){
+    public Set<AppRole> validateIfRoleNotExist(Set<String> roles){
         return roles.stream()
                 .map(r -> roleRepository.findByName(r)
                 .orElseThrow(() -> new RuntimeException("role with name " + r + " not found,please create one")))
@@ -76,17 +76,17 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public AuthenticationResponseDto generateAccessToken(Authentication authentication, UserT user){
-        Map<String, String> token = jwtService.generateAccessAndRefreshToken(authentication);
+    public AuthenticationResponseDto generateAccessToken(Authentication authentication, AppUser user){
+        Map<String, String> token = refreshTokenService.generateAccessAndRefreshToken(authentication);
         return  new AuthenticationResponseDto(
                 user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(),
-                user.getRoles().stream().map(RoleT::getName).collect(Collectors.toList()),
+                user.getRoles().stream().map(AppRole::getName).collect(Collectors.toList()),
                 token.get("access_Token"), token.get("refresh_Token")
         );
     }
     @Override
     public Map<String, String> generateAccessTokenByRefreshToken(String refreshToken){
-        return jwtService.generateAccessTokenByRefreshToken(refreshToken);
+        return refreshTokenService.generateAccessTokenByRefreshToken(refreshToken);
     }
 
 

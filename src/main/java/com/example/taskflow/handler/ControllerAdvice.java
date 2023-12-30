@@ -1,8 +1,8 @@
 package com.example.taskflow.handler;
 
 import com.example.taskflow.Exception.TokenException;
-import com.example.taskflow.web.model.dto.errorDto.ErrorResponse;
-import com.example.taskflow.web.model.dto.errorDto.Response;
+import com.example.taskflow.model.dto.errorDto.ErrorResponse;
+import com.example.taskflow.model.dto.errorDto.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

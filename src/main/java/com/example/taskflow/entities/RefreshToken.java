@@ -19,6 +19,6 @@ public class RefreshToken {
     private boolean revoked;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private UserT user;
+    private AppUser user;
 
 }

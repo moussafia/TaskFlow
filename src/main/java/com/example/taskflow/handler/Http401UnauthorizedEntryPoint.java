@@ -1,6 +1,6 @@
 package com.example.taskflow.handler;
 
-import com.example.taskflow.web.model.dto.errorDto.ErrorResponse;
+import com.example.taskflow.model.dto.errorDto.ErrorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;

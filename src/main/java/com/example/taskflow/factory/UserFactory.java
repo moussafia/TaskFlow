@@ -1,7 +1,7 @@
 package com.example.taskflow.factory;
 
-import com.example.taskflow.entities.RoleT;
-import com.example.taskflow.entities.UserT;
+import com.example.taskflow.entities.AppRole;
+import com.example.taskflow.entities.AppUser;
 import com.example.taskflow.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -18,15 +18,15 @@ public class UserFactory {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public static List<UserT> createUserFactory(List<RoleT> roleTList){
-        List<UserT> userTList = List.of(
-             new UserT().builder().email("moha@gmail.com").firstName("moha").LastName("moha").password(passwordEncoder.encode("1234"))
-                     .roles(roleTList).build(),
-             new UserT().builder().email("msf@gmail.com").firstName("msf").LastName("msf").password(passwordEncoder.encode("1234"))
-                     .roles(roleTList.stream().filter(rl->!rl.equals("MANAGER")).toList()).build(),
-             new UserT().builder().email("moussa@gmail.com").firstName("moussa").LastName("moussa").password(passwordEncoder.encode("1234"))
-                     .roles(roleTList.stream().filter(rl->!rl.equals("MANAGER")).toList()).build()
+    public static List<AppUser> createUserFactory(List<AppRole> appRoleList){
+        List<AppUser> appUserList = List.of(
+             new AppUser().builder().email("moha@gmail.com").firstName("moha").LastName("moha").password(passwordEncoder.encode("1234"))
+                     .roles(appRoleList).build(),
+             new AppUser().builder().email("msf@gmail.com").firstName("msf").LastName("msf").password(passwordEncoder.encode("1234"))
+                     .roles(appRoleList.stream().filter(rl->!rl.equals("MANAGER")).toList()).build(),
+             new AppUser().builder().email("moussa@gmail.com").firstName("moussa").LastName("moussa").password(passwordEncoder.encode("1234"))
+                     .roles(appRoleList.stream().filter(rl->!rl.equals("MANAGER")).toList()).build()
         );
-        return userRepository.saveAll(userTList);
+        return userRepository.saveAll(appUserList);
     }
 }

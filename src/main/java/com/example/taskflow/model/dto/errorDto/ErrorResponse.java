@@ -1,4 +1,4 @@
-package com.example.taskflow.web.model.dto.errorDto;
+package com.example.taskflow.model.dto.errorDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

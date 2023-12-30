@@ -1,6 +1,6 @@
-package com.example.taskflow.web.model.dto.authDto;
+package com.example.taskflow.model.dto.authDto;
 
-import com.example.taskflow.entities.UserT;
+import com.example.taskflow.entities.AppUser;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -25,8 +25,8 @@ public record RegisterRequestDto(
         Set<String> roles
 
 ) {
-        public static UserT toUser(RegisterRequestDto registerRequestDto){
-                return new UserT().builder()
+        public static AppUser toUser(RegisterRequestDto registerRequestDto){
+                return new AppUser().builder()
                         .firstName(registerRequestDto.firstName())
                         .LastName(registerRequestDto.lastName())
                         .email(registerRequestDto.email())

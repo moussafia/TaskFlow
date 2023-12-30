@@ -11,7 +11,7 @@ import java.util.Collection;
 @Setter @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserT {
+public class AppUser {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String firstName;
@@ -21,8 +21,8 @@ public class UserT {
     private String password;
     @ManyToMany(fetch = FetchType.EAGER)
     @JsonBackReference
-    private Collection<RoleT> roles;
-    @OneToMany(mappedBy = "userT")
+    private Collection<AppRole> roles;
+    @OneToMany(mappedBy = "appUser")
     @JsonBackReference
     private Collection<UserTask> userTasks;
     private int TokenPerDayAvailable;
