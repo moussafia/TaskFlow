@@ -1,4 +1,4 @@
-package com.example.taskflow.model.dto.authDto;
+package com.example.taskflow.web.model.dto.authDto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -1,8 +1,8 @@
 package com.example.taskflow.service.serviceImpl;
 
 import com.example.taskflow.Exception.TokenException;
-import com.example.taskflow.model.entities.RefreshToken;
-import com.example.taskflow.model.entities.UserT;
+import com.example.taskflow.entities.RefreshToken;
+import com.example.taskflow.entities.UserT;
 import com.example.taskflow.repository.RefreshTokenRepository;
 import com.example.taskflow.repository.UserRepository;
 import com.example.taskflow.service.JWTService;
@@ -10,17 +10,14 @@ import com.example.taskflow.service.JWTService;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Base64;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.stereotype.Service;
 
-import javax.naming.AuthenticationException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Collection;

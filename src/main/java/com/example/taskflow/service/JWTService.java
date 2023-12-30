@@ -1,11 +1,10 @@
 package com.example.taskflow.service;
 
 
-import com.example.taskflow.model.entities.RefreshToken;
+import com.example.taskflow.entities.RefreshToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.naming.AuthenticationException;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.Map;

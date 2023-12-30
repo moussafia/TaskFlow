@@ -1,11 +1,10 @@
 package com.example.taskflow.service.serviceImpl;
 
-import com.example.taskflow.model.dto.authDto.AuthenticationRequestDto;
-import com.example.taskflow.model.dto.authDto.AuthenticationResponseDto;
-import com.example.taskflow.model.dto.authDto.RegisterRequestDto;
-import com.example.taskflow.model.entities.RoleT;
-import com.example.taskflow.model.entities.UserT;
-import com.example.taskflow.repository.RefreshTokenRepository;
+import com.example.taskflow.web.model.dto.authDto.AuthenticationRequestDto;
+import com.example.taskflow.web.model.dto.authDto.AuthenticationResponseDto;
+import com.example.taskflow.web.model.dto.authDto.RegisterRequestDto;
+import com.example.taskflow.entities.RoleT;
+import com.example.taskflow.entities.UserT;
 import com.example.taskflow.repository.RoleRepository;
 import com.example.taskflow.repository.UserRepository;
 import com.example.taskflow.service.AuthService;
@@ -13,11 +12,9 @@ import com.example.taskflow.service.JWTService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;

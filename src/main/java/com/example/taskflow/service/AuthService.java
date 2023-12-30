@@ -1,12 +1,11 @@
 package com.example.taskflow.service;
 
-import com.example.taskflow.model.dto.authDto.AuthenticationRequestDto;
-import com.example.taskflow.model.dto.authDto.AuthenticationResponseDto;
-import com.example.taskflow.model.dto.authDto.RegisterRequestDto;
-import com.example.taskflow.model.entities.RoleT;
-import com.example.taskflow.model.entities.UserT;
+import com.example.taskflow.web.model.dto.authDto.AuthenticationRequestDto;
+import com.example.taskflow.web.model.dto.authDto.AuthenticationResponseDto;
+import com.example.taskflow.web.model.dto.authDto.RegisterRequestDto;
+import com.example.taskflow.entities.RoleT;
+import com.example.taskflow.entities.UserT;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.Map;
 import java.util.Set;

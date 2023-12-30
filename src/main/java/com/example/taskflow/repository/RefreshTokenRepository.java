@@ -1,6 +1,6 @@
 package com.example.taskflow.repository;
 
-import com.example.taskflow.model.entities.RefreshToken;
+import com.example.taskflow.entities.RefreshToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

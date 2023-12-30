@@ -1,6 +1,6 @@
 package com.example.taskflow.configuration;
 
-import com.example.taskflow.model.entities.UserT;
+import com.example.taskflow.entities.UserT;
 import com.example.taskflow.repository.UserRepository;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;

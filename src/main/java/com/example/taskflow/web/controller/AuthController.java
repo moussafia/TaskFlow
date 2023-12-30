@@ -1,17 +1,12 @@
 package com.example.taskflow.web.controller;
 
-import com.example.taskflow.model.dto.authDto.AccessTokenRequestDto;
-import com.example.taskflow.model.dto.authDto.AuthenticationRequestDto;
-import com.example.taskflow.model.dto.authDto.AuthenticationResponseDto;
-import com.example.taskflow.model.dto.authDto.RegisterRequestDto;
+import com.example.taskflow.web.model.dto.authDto.AccessTokenRequestDto;
+import com.example.taskflow.web.model.dto.authDto.AuthenticationRequestDto;
+import com.example.taskflow.web.model.dto.authDto.AuthenticationResponseDto;
+import com.example.taskflow.web.model.dto.authDto.RegisterRequestDto;
 import com.example.taskflow.service.AuthService;
-import com.example.taskflow.service.JWTService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;

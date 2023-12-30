@@ -1,6 +1,6 @@
 package com.example.taskflow.factory;
 
-import com.example.taskflow.model.entities.PermissionT;
+import com.example.taskflow.entities.PermissionT;
 import com.example.taskflow.repository.PermissionRepository;
 import org.springframework.stereotype.Component;
 

@@ -1,7 +1,7 @@
 package com.example.taskflow.factory;
 
-import com.example.taskflow.model.entities.RoleT;
-import com.example.taskflow.model.entities.UserT;
+import com.example.taskflow.entities.RoleT;
+import com.example.taskflow.entities.UserT;
 import com.example.taskflow.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;

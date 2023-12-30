@@ -1,7 +1,7 @@
-package com.example.taskflow.model.entities;
+package com.example.taskflow.entities;
 
-import com.example.taskflow.model.entities.enums.RequestStatus;
-import com.example.taskflow.model.entities.enums.TypeRequest;
+import com.example.taskflow.entities.enums.RequestStatus;
+import com.example.taskflow.entities.enums.TypeRequest;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
