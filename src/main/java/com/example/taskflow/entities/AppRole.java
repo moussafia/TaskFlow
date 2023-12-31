@@ -16,5 +16,5 @@ public class AppRole {
     @Column(unique = true)
     private String name;
     @ManyToMany(fetch = FetchType.EAGER)
-    private Collection<PermissionT> permissions;
+    private Collection<AppPermission> permissions;
 }

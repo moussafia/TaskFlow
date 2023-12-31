@@ -1,4 +1,4 @@
-package com.example.taskflow.service.serviceImpl;
+package com.example.taskflow.service.serviceImpl.auth;
 
 import com.example.taskflow.entities.AppUser;
 import com.example.taskflow.repository.UserRepository;
@@ -22,7 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         AppUser appUser = userRepository.findByEmail(username)
                 .orElseThrow(()-> new UsernameNotFoundException("user with email "+ username + " not found"));
         Collection<? extends GrantedAuthority> authorities = appUser.getRoles().stream()
-                .flatMap(r -> r.getPermissions().stream().map(p->new SimpleGrantedAuthority(p.getName())))
+                .flatMap(r -> r.getPermissions().stream().map(p->new SimpleGrantedAuthority("ROLE_" + p.getName())))
                 .collect(Collectors.toSet());
         return new User(username, appUser.getPassword(), authorities);
     }

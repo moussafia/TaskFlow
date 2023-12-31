@@ -1,6 +1,6 @@
 package com.example.taskflow.factory;
 
-import com.example.taskflow.entities.PermissionT;
+import com.example.taskflow.entities.AppPermission;
 import com.example.taskflow.repository.PermissionRepository;
 import org.springframework.stereotype.Component;
 
@@ -13,16 +13,16 @@ public class PermissionFactory {
         this.permissionRepository = permissionRepository;
     }
 
-    public static List<PermissionT> createPermissionFactory(){
-        List<PermissionT> permissionTList = List.of(
-                new PermissionT(null,"can_create"),
-                new PermissionT(null,"can_show"),
-                new PermissionT(null,"can_delete"),
-                new PermissionT(null,"can_update"),
-                new PermissionT(null,"can_assign"),
-                new PermissionT(null,"can_assignToOther"),
-                new PermissionT(null,"can_request")
+    public static List<AppPermission> createPermissionFactory(){
+        List<AppPermission> appPermissionList = List.of(
+                new AppPermission(null, "CREATE"),
+                new AppPermission(null, "SHOW"),
+                new AppPermission(null, "DELETE"),
+                new AppPermission(null, "UPDATE"),
+                new AppPermission(null, "ASSIGN"),
+                new AppPermission(null, "ASSIGNTOOTHER"),
+                new AppPermission(null, "REQUEST")
         );
-        return permissionRepository.saveAll(permissionTList);
+        return permissionRepository.saveAll(appPermissionList);
     }
 }

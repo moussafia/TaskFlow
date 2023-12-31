@@ -9,7 +9,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PermissionT {
+public class AppPermission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

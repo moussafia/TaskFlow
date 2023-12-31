@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -49,16 +50,19 @@ private PasswordEncoder passwordEncoder;
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(UserDetailsService userDetailsService){
+    public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService){
         var authProvider = new DaoAuthenticationProvider();
         authProvider.setPasswordEncoder(passwordEncoder);
         authProvider.setUserDetailsService(userDetailsService);
+        return authProvider;
+    }
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationProvider authProvider){
         return new ProviderManager(authProvider);
     }
 
     @Bean
     JwtDecoder jwtDecoder(){
-
         return NimbusJwtDecoder.withPublicKey(rsaKeyConfig.publicKey()).build();
     }
     @Bean
@@ -67,8 +71,4 @@ private PasswordEncoder passwordEncoder;
         JWKSource<SecurityContext> jwkSource= new ImmutableJWKSet<>(new JWKSet(jwk));
         return new NimbusJwtEncoder(jwkSource);
     }
-
-
-
-
 }

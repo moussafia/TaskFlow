@@ -13,10 +13,5 @@ import java.util.Set;
 public interface AuthService {
 public AuthenticationResponseDto authenticate(AuthenticationRequestDto authenticationRequestDto);
 public AuthenticationResponseDto signUp(RegisterRequestDto registerRequestDto);
-public void validateUserIfExistForSignUp(String email);
 
-public Set<AppRole> validateIfRoleNotExist(Set<String> roles);
-
-public AuthenticationResponseDto generateAccessToken(Authentication authentication, AppUser user);
-public Map<String, String> generateAccessTokenByRefreshToken(String refreshToken);
 }

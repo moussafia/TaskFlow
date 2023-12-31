@@ -1,10 +1,11 @@
-package com.example.taskflow.service.serviceImpl;
+package com.example.taskflow.service.serviceImpl.auth.jwt;
 
 import com.example.taskflow.Exception.TokenException;
 import com.example.taskflow.entities.RefreshToken;
 import com.example.taskflow.entities.AppUser;
 import com.example.taskflow.repository.RefreshTokenRepository;
 import com.example.taskflow.repository.UserRepository;
+import com.example.taskflow.service.JWTService;
 import com.example.taskflow.service.RefreshTokenService;
 
 import java.time.OffsetDateTime;
@@ -14,34 +15,26 @@ import java.util.Base64;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.oauth2.jwt.*;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
+
 @Service
 public class RefreshTokenServiceImpl implements RefreshTokenService {
-    private final JwtEncoder jwtEncoder;
-    private final JwtDecoder jwtDecoder;
-    private final UserDetailsService userDetailsService;
     private RefreshTokenRepository refreshTokenRepository;
     private UserRepository userRepository;
+    private JWTService jwtService;
 
-    public RefreshTokenServiceImpl(JwtEncoder jwtEncoder, JwtDecoder jwtDecoder,
-                                   UserDetailsService userDetailsService,
-                                   RefreshTokenRepository refreshTokenRepository,
-                                   UserRepository userRepository) {
-        this.jwtEncoder = jwtEncoder;
-        this.jwtDecoder = jwtDecoder;
-        this.userDetailsService = userDetailsService;
+    public RefreshTokenServiceImpl(RefreshTokenRepository refreshTokenRepository,
+                                   UserRepository userRepository,
+                                   JWTService jwtService) {
         this.refreshTokenRepository = refreshTokenRepository;
         this.userRepository = userRepository;
+        this.jwtService = jwtService;
     }
     @Override
     public Map<String, String> generateAccessAndRefreshToken(Authentication authentication) {
@@ -49,27 +42,11 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         Instant instant = Instant.now();
         Map<String, String> token = new HashMap<>();
-        token.put("access_Token", this.jwtAccessTokenEncoded(subject, instant, authorities));
+        token.put("access_Token", jwtService.jwtAccessTokenEncoded(subject, instant, authorities));
         token.put("refresh_Token", this.jwtRefreshTokenEncoded(subject, instant));
         return token;
     }
-    @Override
-    public String jwtAccessTokenEncoded(String subject, Instant instant, Collection<? extends GrantedAuthority> authorities){
-        String scope = authorities.stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(" "));
-        JwtClaimsSet jwtClaimsAccessToken = JwtClaimsSet.builder()
-                .subject(subject)
-                .issuedAt(instant)
-                .expiresAt(instant.plus(1, ChronoUnit.MINUTES))
-                .issuer("task-service")
-                .claim("scope",scope)
-                .claim("type_token","ACCESS_TOKEN")
-                .build();
-        return jwtEncoder.encode(JwtEncoderParameters.from(jwtClaimsAccessToken)).getTokenValue();
-    }
-    // @Value("${}")
-    // private long refreshToken;
+
     @Override
     public String jwtRefreshTokenEncoded(String subject, Instant instant){
         AppUser appUser =userRepository.findByEmail(subject)
@@ -96,7 +73,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
                 .orElseThrow(()-> new RuntimeException("refresh token not found"))
                 .getUser();
         Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
-        String accessToken = jwtAccessTokenEncoded(user.getEmail(), Instant.now(), authentication.getAuthorities());
+        String accessToken = jwtService.jwtAccessTokenEncoded(user.getEmail(), Instant.now(), authentication.getAuthorities());
         Map<String, String> token = new HashMap<>();
         token.put("access_Token", accessToken);
         token.put("refresh_Token", refreshToken);

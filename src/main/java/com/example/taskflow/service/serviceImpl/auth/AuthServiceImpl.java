@@ -1,4 +1,4 @@
-package com.example.taskflow.service.serviceImpl;
+package com.example.taskflow.service.serviceImpl.auth;
 
 import com.example.taskflow.model.dto.authDto.AuthenticationRequestDto;
 import com.example.taskflow.model.dto.authDto.AuthenticationResponseDto;
@@ -9,6 +9,7 @@ import com.example.taskflow.repository.RoleRepository;
 import com.example.taskflow.repository.UserRepository;
 import com.example.taskflow.service.AuthService;
 import com.example.taskflow.service.RefreshTokenService;
+import jakarta.validation.ValidationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -60,23 +61,20 @@ public class AuthServiceImpl implements AuthService {
         return generateAccessToken(authentication, userSaved);
     }
 
-    @Override
-    public void validateUserIfExistForSignUp(String email) {
+    private void validateUserIfExistForSignUp(String email) {
         Optional<AppUser> user = userRepository.findByEmail(email);
                 if(user.isPresent()){
-                    throw new RuntimeException("user with email "+ email +" already exist");
+                    throw new ValidationException("user with email "+ email +" already exist");
                 }
     }
-    @Override
-    public Set<AppRole> validateIfRoleNotExist(Set<String> roles){
+    private Set<AppRole> validateIfRoleNotExist(Set<String> roles){
         return roles.stream()
                 .map(r -> roleRepository.findByName(r)
-                .orElseThrow(() -> new RuntimeException("role with name " + r + " not found,please create one")))
+                .orElseThrow(() -> new ValidationException("role with name " + r + " not found,please create one")))
                 .collect(Collectors.toSet());
     }
 
-    @Override
-    public AuthenticationResponseDto generateAccessToken(Authentication authentication, AppUser user){
+    private AuthenticationResponseDto generateAccessToken(Authentication authentication, AppUser user){
         Map<String, String> token = refreshTokenService.generateAccessAndRefreshToken(authentication);
         return  new AuthenticationResponseDto(
                 user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(),
@@ -84,8 +82,7 @@ public class AuthServiceImpl implements AuthService {
                 token.get("access_Token"), token.get("refresh_Token")
         );
     }
-    @Override
-    public Map<String, String> generateAccessTokenByRefreshToken(String refreshToken){
+    private Map<String, String> generateAccessTokenByRefreshToken(String refreshToken){
         return refreshTokenService.generateAccessTokenByRefreshToken(refreshToken);
     }
 

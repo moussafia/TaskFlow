@@ -5,6 +5,7 @@ import com.example.taskflow.model.dto.errorDto.ErrorResponse;
 import com.example.taskflow.model.dto.errorDto.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -17,48 +18,31 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class ControllerAdvice {
-
-    @ExceptionHandler(TokenException.class)
+    @ExceptionHandler(value = TokenException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ResponseEntity<ErrorResponse> handleTokenException(TokenException te, WebRequest webRequest){
+    public ResponseEntity<ErrorResponse> handleRefreshTokenException(TokenException ex, WebRequest request){
         final ErrorResponse errorResponse = ErrorResponse.builder()
                 .timestamp(Instant.now())
                 .error("Invalid Token")
                 .status(HttpStatus.FORBIDDEN.value())
-                .message(te.getMessage())
-                .path(webRequest.getDescription(false))
+                .message(ex.getMessage())
+                .path(request.getDescription(false))
                 .build();
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
+        return new ResponseEntity<>(errorResponse,HttpStatus.FORBIDDEN);
     }
-    @ExceptionHandler(RuntimeException.class)
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<Map<String,String>> handleRunTimeException(RuntimeException re){
-        Map<String, String> error = new HashMap<>();
-        error.put("error", "error server");
-        error.put("message", re.getMessage());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
-    }
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<Map<String,String>> handleMethodValidationExceptions(MethodArgumentNotValidException me){
+    public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
-        me.getBindingResult().getFieldErrors().forEach(fieldError ->{
-            String fieldName = fieldError.getField();
-            String errorMessage = fieldError.getDefaultMessage();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
+        return errors;
+    }
 
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errors);
-    }
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(Exception.class)
-    private ResponseEntity<Response<Object>> handleValidationExceptions(Exception ex) {
-        ex.printStackTrace();
-        return ResponseEntity.internalServerError().body(Response.builder()
-                .message("Internal server error")
-                .result(ex.getMessage())
-                .build());
-    }
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Response<Object>> handleIllegalArgumentException(IllegalArgumentException ex) {
