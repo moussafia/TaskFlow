@@ -1,10 +1,13 @@
 package com.example.taskflow.entities;
 
 import com.example.taskflow.entities.enums.TaskAction;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
+
 @Entity
 @Getter
 @Setter
@@ -20,6 +23,7 @@ public class UserTask {
     private Task task;
     @ManyToOne
     private AppUser appUser;
-    @ManyToOne
-    private UserRequest userRequest;
+    @OneToMany(mappedBy = "userTask", cascade = CascadeType.REMOVE)
+    @JsonBackReference
+    private Collection<UserRequest> userRequests;
 }

@@ -23,10 +23,14 @@ public class Task {
     private LocalTime startTime;
     private LocalTime endTime;
     private TaskStatus taskStatus;
+    @Column(columnDefinition = "boolean default false")
     private boolean isChanged;
+    @Column(columnDefinition = "boolean default false")
+    private boolean isAlreadyAssigned;
     @ManyToMany
     private Collection<Tag> tags;
-    @OneToMany(mappedBy = "task")
+    @OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE)
     @JsonBackReference
     private Collection<UserTask> userTasks;
+
 }

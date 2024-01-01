@@ -1,5 +1,6 @@
 package com.example.taskflow.handler;
 
+import com.example.taskflow.Exception.CustomValidationException;
 import com.example.taskflow.Exception.TokenException;
 import com.example.taskflow.model.dto.errorDto.ErrorResponse;
 import com.example.taskflow.model.dto.errorDto.Response;
@@ -46,6 +47,13 @@ public class ControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Response<Object>> handleIllegalArgumentException(IllegalArgumentException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response.builder()
+                .message(ex.getMessage())
+                .build());
+    }
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(CustomValidationException.class)
+    public ResponseEntity<Response<Object>> handleCustomValidationException(CustomValidationException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response.builder()
                 .message(ex.getMessage())
                 .build());

@@ -11,12 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class test {
-    Logger logger = LoggerFactory.getLogger(test.class);
 @GetMapping("/test")
 @PreAuthorize("hasRole('ASSIGNTOOTHER')")
 public ResponseEntity<String> test(){
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    logger.info("User Authorities: {}", authentication.getAuthorities());
     return ResponseEntity.ok().body("test");
     }
 }

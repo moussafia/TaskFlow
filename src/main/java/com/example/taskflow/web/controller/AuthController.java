@@ -5,6 +5,7 @@ import com.example.taskflow.model.dto.authDto.AuthenticationRequestDto;
 import com.example.taskflow.model.dto.authDto.AuthenticationResponseDto;
 import com.example.taskflow.model.dto.authDto.RegisterRequestDto;
 import com.example.taskflow.service.AuthService;
+import com.example.taskflow.service.RefreshTokenService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +16,10 @@ import java.util.Map;
 @RequestMapping("api/v1/auth")
 public class AuthController {
     private AuthService authService;
-    public AuthController(AuthService authService) {
+    private RefreshTokenService refreshTokenService;
+    public AuthController(AuthService authService, RefreshTokenService refreshTokenService) {
         this.authService = authService;
+        this.refreshTokenService = refreshTokenService;
     }
     @PostMapping("/logIn")
     public ResponseEntity<AuthenticationResponseDto> logIn(@RequestBody
@@ -33,6 +36,6 @@ public class AuthController {
     public ResponseEntity<Map<String, String>> getAccessTokenByRefreshToken(@RequestBody
                                                                             @Valid AccessTokenRequestDto refreshToken){
 
-        return ResponseEntity.ok(authService.generateAccessTokenByRefreshToken(refreshToken.refreshToken()));
+        return ResponseEntity.ok(refreshTokenService.generateAccessTokenByRefreshToken(refreshToken.refreshToken()));
     }
 }
