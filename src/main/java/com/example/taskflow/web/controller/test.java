@@ -12,9 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class test {
 @GetMapping("/test")
-@PreAuthorize("hasRole('ASSIGNTOOTHER')")
+@PreAuthorize("hasAuthority('SCOPE_ASSIGNTOOTHER')")
 public ResponseEntity<String> test(){
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     return ResponseEntity.ok().body("test");
-    }
+}
 }

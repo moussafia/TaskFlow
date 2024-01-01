@@ -23,9 +23,9 @@ public class UserFactory {
              new AppUser().builder().email("moha@gmail.com").firstName("moha").LastName("moha").password(passwordEncoder.encode("1234"))
                      .roles(appRoleList).build(),
              new AppUser().builder().email("msf@gmail.com").firstName("msf").LastName("msf").password(passwordEncoder.encode("1234"))
-                     .roles(appRoleList.stream().filter(rl->!rl.equals("MANAGER")).toList()).build(),
+                     .roles(appRoleList.stream().filter(rl->!rl.getName().equals("MANAGER")).toList()).build(),
              new AppUser().builder().email("moussa@gmail.com").firstName("moussa").LastName("moussa").password(passwordEncoder.encode("1234"))
-                     .roles(appRoleList.stream().filter(rl->!rl.equals("MANAGER")).toList()).build()
+                     .roles(appRoleList.stream().filter(rl->!rl.getName().equals("MANAGER")).toList()).build()
         );
         return userRepository.saveAll(appUserList);
     }

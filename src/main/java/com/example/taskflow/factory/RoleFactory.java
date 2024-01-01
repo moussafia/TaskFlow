@@ -16,7 +16,7 @@ public class RoleFactory {
     public static List<AppRole> createRoles(List<AppPermission> appPermissionList){
         List<AppRole> appRoleList = List.of(
                 new AppRole().builder().name("USER").permissions(appPermissionList.stream()
-                        .filter(p-> !p.getName().equals("CAN_ASSIGNTOOTHER")).toList()).build(),
+                        .filter(p-> !p.getName().equals("ASSIGNTOOTHER")).toList()).build(),
                 new AppRole().builder().name("MANAGER").permissions(appPermissionList).build()
         );
         return roleRepository.saveAll(appRoleList);
