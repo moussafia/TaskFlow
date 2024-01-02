@@ -27,6 +27,6 @@ public class AppUser {
     @OneToMany(mappedBy = "appUser")
     @JsonBackReference
     private Collection<UserTask> userTasks;
-    private int TokenPerDayAvailable;
-    private int TokenPerMonthAvailable;
+    private int TokenPerDayAvailable = 2;
+    private int TokenPerMonthAvailable = 2;
 }

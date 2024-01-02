@@ -6,7 +6,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity @Getter @Setter
@@ -19,16 +21,14 @@ public class Task {
     private Long id;
     private String title;
     private String description;
-    private LocalDate date;
-    private LocalTime startTime;
-    private LocalTime endTime;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate ;
     private TaskStatus taskStatus;
-    @Column(columnDefinition = "boolean default false")
-    private boolean isChanged;
-    @Column(columnDefinition = "boolean default false")
-    private boolean isAlreadyAssigned;
+    private boolean isChanged = false ;
+    private boolean isAlreadyAssigned = false;
     @ManyToMany
-    private Collection<Tag> tags;
+    @JsonBackReference
+    private Collection<Tag> tags = new ArrayList<>();
     @OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE)
     @JsonBackReference
     private Collection<UserTask> userTasks;

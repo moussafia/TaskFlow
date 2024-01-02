@@ -31,7 +31,7 @@ public class UserRequestServiceImpl implements UserRequestService {
         UserTask userTask = userTaskService.getTaskForUserByTaskAction(appUser, task_id, TaskAction.ASSIGNED);
         checkTokenPerDayForUser(appUser);
         validateIfRequestAlreadyExist(userTask);
-        validateDateLimitOfTask(userTask.getTask().getDate(), userTask.getTask().getEndTime());
+        validateDateLimitOfTask(userTask.getTask().getEndDate());
         UserRequest userRequest = new UserRequest().builder()
                 .dateRequest(LocalDateTime.now())
                 .requestStatus(RequestStatus.PENDING)
@@ -42,9 +42,8 @@ public class UserRequestServiceImpl implements UserRequestService {
 
 
 
-    private void validateDateLimitOfTask(LocalDate dateLimit, LocalTime endTime) {
-        if(dateLimit.isBefore(LocalDate.now())
-                || (dateLimit.equals(LocalDate.now()) && endTime.isBefore(LocalTime.now()))){
+    private void validateDateLimitOfTask(LocalDateTime endDateOfTask) {
+        if(endDateOfTask.isBefore(LocalDateTime.now())){
             throw new CustomValidationException("You cannot make a request for a task with a deadline that has already passed.");
         }
     }

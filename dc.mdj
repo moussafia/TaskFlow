@@ -1813,24 +1813,7 @@
 											"top": 461,
 											"width": 168.02880859375,
 											"height": 13,
-											"text": "+date: date",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLAttributeView",
-											"_id": "AAAAAAGMnLp7PKpTUbo=",
-											"_parent": {
-												"$ref": "AAAAAAGMnLZXlKV01nc="
-											},
-											"model": {
-												"$ref": "AAAAAAGMnLp7AapKmbE="
-											},
-											"font": "Arial;13;0",
-											"left": 565,
-											"top": 476,
-											"width": 168.02880859375,
-											"height": 13,
-											"text": "+startTime: time",
+											"text": "+startDate: DateTime",
 											"horizontalAlignment": 0
 										},
 										{
@@ -1844,10 +1827,10 @@
 											},
 											"font": "Arial;13;0",
 											"left": 565,
-											"top": 491,
+											"top": 476,
 											"width": 168.02880859375,
 											"height": 13,
-											"text": "+endTime: time",
+											"text": "+endDate: DateTime",
 											"horizontalAlignment": 0
 										},
 										{
@@ -1861,7 +1844,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 565,
-											"top": 506,
+											"top": 491,
 											"width": 168.02880859375,
 											"height": 13,
 											"text": "+description: string",
@@ -1878,7 +1861,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 565,
-											"top": 521,
+											"top": 506,
 											"width": 168.02880859375,
 											"height": 13,
 											"text": "+taskStatus: TaskStatus",
@@ -1895,7 +1878,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 565,
-											"top": 536,
+											"top": 521,
 											"width": 168.02880859375,
 											"height": 13,
 											"text": "+isChanged: boolean",
@@ -1912,7 +1895,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 565,
-											"top": 551,
+											"top": 536,
 											"width": 168.02880859375,
 											"height": 13,
 											"text": "+isAlreadyAssigned: boolean",
@@ -1923,7 +1906,7 @@
 									"left": 560,
 									"top": 441,
 									"width": 178.02880859375,
-									"height": 128
+									"height": 113
 								},
 								{
 									"_type": "UMLOperationCompartmentView",
@@ -1936,7 +1919,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 560,
-									"top": 569,
+									"top": 554,
 									"width": 178.02880859375,
 									"height": 10
 								},
@@ -5620,17 +5603,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGMnLZXlKVsg48="
 							},
-							"name": "date",
-							"type": "date"
-						},
-						{
-							"_type": "UMLAttribute",
-							"_id": "AAAAAAGMnLp7AapKmbE=",
-							"_parent": {
-								"$ref": "AAAAAAGMnLZXlKVsg48="
-							},
-							"name": "startTime",
-							"type": "time"
+							"name": "startDate",
+							"type": "DateTime"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -5638,8 +5612,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGMnLZXlKVsg48="
 							},
-							"name": "endTime",
-							"type": "time"
+							"name": "endDate",
+							"type": "DateTime"
 						},
 						{
 							"_type": "UMLAttribute",

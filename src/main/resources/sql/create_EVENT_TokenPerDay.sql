@@ -1,3 +1,4 @@
+use taskflow;
 DELIMITER //
     SET CLOBAL event_scheduler = ON
     CREATE EVENT update_token_of_day
