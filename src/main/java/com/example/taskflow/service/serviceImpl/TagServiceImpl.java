@@ -23,7 +23,6 @@ public class TagServiceImpl implements TagService {
             tagsName.add(name);
         }
         return createAndFilterTag(fetchAllTags(), tagsName);
-
     }
     @Override
     public List<Tag> fetchAllTags(){
