@@ -32,7 +32,7 @@ public class TaskController {
         Set<Tag> tags = TagMapper.INSTANCE.newInstance().tagDtoListToTagList(createTaskRequest.tags());
         UserTask userTaskSaved = userTaskService.createTask(task, tags);
         UserTaskResponseDto userTaskSavedDto = UserTaskMapper.INSTANCE.newInstance().toUserTaskDto(userTaskSaved);
-        return ResponseEntity.ok(userTaskSavedDto);
+        return ResponseEntity.ok().body(userTaskSavedDto);
     }
 
 }

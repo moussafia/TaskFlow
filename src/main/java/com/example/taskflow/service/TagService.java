@@ -7,4 +7,5 @@ import java.util.Set;
 
 public interface TagService {
     public List<Tag> createTags(Set<Tag> tags);
+    public List<Tag> fetchAllTags();
 }
