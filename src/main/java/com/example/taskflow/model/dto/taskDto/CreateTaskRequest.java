@@ -1,6 +1,7 @@
 package com.example.taskflow.model.dto.taskDto;
 
 import com.example.taskflow.entities.Tag;
+import com.example.taskflow.entities.Task;
 import com.example.taskflow.entities.enums.TaskStatus;
 import com.example.taskflow.model.dto.tagDto.TagRequestDto;
 

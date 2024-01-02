@@ -22,7 +22,7 @@ public class Task {
     private String title;
     private String description;
     private LocalDateTime startDate;
-    private LocalDateTime endDate ;
+    private LocalDateTime endDate;
     private TaskStatus taskStatus;
     private boolean isChanged = false ;
     private boolean isAlreadyAssigned = false;
