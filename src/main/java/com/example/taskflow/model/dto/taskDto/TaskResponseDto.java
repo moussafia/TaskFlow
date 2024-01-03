@@ -2,7 +2,6 @@ package com.example.taskflow.model.dto.taskDto;
 
 import com.example.taskflow.entities.Tag;
 import com.example.taskflow.entities.enums.TaskStatus;
-import com.example.taskflow.model.dto.tagDto.TagRequestDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.ManyToMany;
 
@@ -16,9 +15,9 @@ public record TaskResponseDto(
         String description,
         LocalDateTime startDate,
         LocalDateTime endDate ,
-        String taskStatus,
+        TaskStatus taskStatus,
         boolean isChanged,
         boolean isAlreadyAssigned,
-        Collection<TagRequestDto> tags
+        Collection<Tag>tags
 ) {
 }

@@ -6,6 +6,7 @@ import com.example.taskflow.service.TagService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,25 +18,33 @@ public class TagServiceImpl implements TagService {
     private final TagRepository tagRepository;
     @Override
     public List<Tag> createTags(Set<Tag> tags) {
-        Set<String> tagsName = new HashSet<>();
-        for (Tag tag1 : tags) {
-            String name = tag1.getName();
-            tagsName.add(name);
+        Set<String> tagNames = tags.stream()
+                .map(Tag::getName)
+                .collect(Collectors.toSet());
+        List<Tag> tagExisting = fetchExistingTagInList(tagNames);
+        if(!tagExisting.isEmpty()){
+            return createAndFilterTag(tagExisting, tags);
         }
-        return createAndFilterTag(fetchAllTags(), tagsName);
+        return tagRepository.saveAll(tags);
     }
     @Override
     public List<Tag> fetchAllTags(){
         return tagRepository.findAll();
     }
-    private List<Tag> createAndFilterTag(List<Tag> tags, Set<String> tagsName){
-        return tags.stream()
-                .map(tag->{
-                    if(tagsName.contains(tag.getName())){
-                        return tag;
-                    }else {
-                        return tagRepository.save(tag);
-                    }
-                }).toList();
+    private List<Tag> fetchExistingTagInList(Set<String> tagNames){
+        return tagRepository.fetchTagExistingInList(tagNames)
+                .orElse(null);
+    }
+    private List<Tag> createAndFilterTag(List<Tag> tagExisting, Set<Tag> tags){
+        List<String> tagExistingName = tagExisting.stream().map(Tag::getName)
+                .toList();
+        List<Tag> savingTag = tags.stream()
+                .filter(tag -> !tagExistingName.contains(tag.getName()))
+                .map(tagRepository::save)
+                .toList();
+        List<Tag> tagsSaved = new ArrayList<>();
+        tagsSaved.addAll(tagExisting);
+        tagsSaved.addAll(savingTag);
+        return tagsSaved;
     }
 }

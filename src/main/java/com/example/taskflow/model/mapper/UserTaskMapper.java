@@ -9,6 +9,5 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface UserTaskMapper {
     Class<? extends UserTaskMapper> INSTANCE = Mappers.getMapperClass(UserTaskMapper.class);
-
    UserTaskResponseDto toUserTaskDto(UserTask userTask);
 }
