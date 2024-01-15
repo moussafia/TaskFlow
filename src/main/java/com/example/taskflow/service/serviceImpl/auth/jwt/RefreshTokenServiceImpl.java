@@ -1,6 +1,7 @@
 package com.example.taskflow.service.serviceImpl.auth.jwt;
 
 import com.example.taskflow.Exception.TokenException;
+import com.example.taskflow.entities.AppRole;
 import com.example.taskflow.entities.RefreshToken;
 import com.example.taskflow.entities.AppUser;
 import com.example.taskflow.repository.RefreshTokenRepository;
@@ -10,7 +11,7 @@ import com.example.taskflow.service.RefreshTokenService;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.Base64;
+import java.util.*;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,10 +19,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 @Service
 public class RefreshTokenServiceImpl implements RefreshTokenService {
@@ -37,12 +34,13 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
         this.jwtService = jwtService;
     }
     @Override
-    public Map<String, String> generateAccessAndRefreshToken(Authentication authentication) {
+    public Map<String, String> generateAccessAndRefreshToken(Authentication authentication,
+                                                             List<AppRole> roles) {
         String subject = authentication.getName();
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         Instant instant = Instant.now();
         Map<String, String> token = new HashMap<>();
-        token.put("access_Token", jwtService.jwtAccessTokenEncoded(subject, instant, authorities));
+        token.put("access_Token", jwtService.jwtAccessTokenEncoded(subject, instant, authorities, roles));
         token.put("refresh_Token", this.jwtRefreshTokenEncoded(subject, instant));
         return token;
     }
@@ -73,7 +71,8 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
                 .orElseThrow(()-> new RuntimeException("refresh token not found"))
                 .getUser();
         Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
-        String accessToken = jwtService.jwtAccessTokenEncoded(user.getEmail(), Instant.now(), authentication.getAuthorities());
+        String accessToken = jwtService.jwtAccessTokenEncoded(user.getEmail(), Instant.now(),
+                authentication.getAuthorities(),user.getRoles().stream().toList());
         Map<String, String> token = new HashMap<>();
         token.put("access_Token", accessToken);
         token.put("refresh_Token", refreshToken);

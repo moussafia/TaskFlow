@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -75,7 +76,8 @@ public class AuthServiceImpl implements AuthService {
     }
 
     private AuthenticationResponseDto generateAccessToken(Authentication authentication, AppUser user){
-        Map<String, String> token = refreshTokenService.generateAccessAndRefreshToken(authentication);
+        Map<String, String> token = refreshTokenService.generateAccessAndRefreshToken(authentication,
+                                        user.getRoles().stream().toList());
         return  new AuthenticationResponseDto(
                 user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(),
                 user.getRoles().stream().map(AppRole::getName).collect(Collectors.toList()),

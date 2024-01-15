@@ -18,6 +18,6 @@ public record TaskResponseDto(
         TaskStatus taskStatus,
         boolean isChanged,
         boolean isAlreadyAssigned,
-        Collection<Tag>tags
+        Collection<Tag> tags
 ) {
 }
