@@ -38,7 +38,8 @@ public class SecurityConfiguration {
                         exception.authenticationEntryPoint(unauthorizedEntryPoint)
                                 .accessDeniedHandler(accessDeniedHandler))
                 .authorizeHttpRequests(request ->
-                        request.requestMatchers("api/v1/auth/**").permitAll()
+                        request
+                                .requestMatchers("api/v1/auth/**").permitAll()
                                 .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
